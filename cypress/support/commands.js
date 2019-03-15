@@ -23,3 +23,12 @@
 //
 // -- This is will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+Cypress.Commands.add('selectOption', (poolId, { text, option }) => {
+  cy.visit(`/poll/${poolId}`);
+  cy.clearCookies();
+  cy.visit(`/poll/${poolId}`);
+  cy.get('#d-newParticipantInput').type(text);
+  cy.get(`#d-pollView > article > div > div > div > ul > li:nth-child(${option}) input`).click({ force: true });
+  cy.get('.d-actionButtons > .d-button').click();
+  cy.clearCookies();
+});
